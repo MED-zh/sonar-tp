@@ -1,0 +1,40 @@
+name: SonarQube Analysis
+
+# Déclenche l’analyse à chaque push sur la branche main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    runs-on: self-hosted  # Utilisez 'ubuntu-latest' si vous utilisez un runner hébergé par GitHub
+    
+    steps:
+      # Étape 1 : Récupération du code du dépôt
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      # Étape 2 : Configuration de Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      # Étape 3 : Installation des dépendances
+      - name: Install dependencies
+        run: npm install
+
+      # Étape 4 : Exécution de l'analyse SonarQube
+      - name: Run SonarQube Scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=pr_sonar \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.login=$SONAR_TOKEN
