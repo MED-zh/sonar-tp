@@ -22,13 +22,10 @@ jobs:
         with:
           java-version: '11'  # Specify your Java version if you're working with a Java project
 
-      - name: Install Sonar Scanner
+      - name: Verify Sonar Scanner Path
         run: |
-          # Download and install Sonar Scanner
-          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
-          Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "C:\sonar-scanner" -Force
-          # Add Sonar Scanner to the PATH
-          $env:Path += ";C:\sonar-scanner\sonar-scanner-4.8.0.2856-windows\bin"
+          # Check if sonar-scanner is available in the PATH
+          sonar-scanner --version
 
       - name: Run SonarQube Scanner
         env:
