@@ -20,7 +20,7 @@ jobs:
       - name: Set up JDK (if necessary)
         uses: actions/setup-java@v2
         with:
-          java-version: '11'  # Specify your Java version if you're working with a Java project
+          java-version: '17'  # Specify your Java version if you're working with a Java project
 
       - name: Verify Sonar Scanner Path
         run: |
@@ -29,7 +29,7 @@ jobs:
 
       - name: Run SonarQube Scanner
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Use the token stored as a secret
+          SONAR_TOKEN: sqp_26abc256d0dafb51ec58afa086a98a8bab04ff27  # Use the token stored as a secret
         run: |
           sonar-scanner ^
             -Dsonar.projectKey=your_project_key ^
